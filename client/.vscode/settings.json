@@ -1,0 +1,7 @@
+{
+  "workbench.colorCustomizations": {
+    "statusBar.noFolderBackground": "#f1f1f1"
+  },
+  "peacock.showColorInStatusBar": true,
+  "workbench.statusBar.visible": true
+}
