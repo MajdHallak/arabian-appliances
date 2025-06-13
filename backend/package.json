@@ -1,12 +1,14 @@
 {
     "name": "arabian-appliance-backend",
     "version": "1.0.0",
+    "license": "UNLICENSED",
     "description": "Backend API for Arabian Appliance mobile application",
     "type": "module",
     "main": "src/server.js",
     "scripts": {
         "start": "node src/server.js",
         "dev": "nodemon src/server.js",
+        "build": "babel src -d dist",
         "seed": "node src/utils/seedData.js",
         "server:start": "node manage-server.js start",
         "server:stop": "node manage-server.js stop",
@@ -36,6 +38,9 @@
         "winston": "^3.11.0"
     },
     "devDependencies": {
+        "@babel/cli": "^7.27.2",
+        "@babel/core": "^7.27.4",
+        "@babel/preset-env": "^7.27.2",
         "kill-port": "^2.0.1"
     }
 }
