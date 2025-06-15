@@ -1,6 +1,7 @@
 import * as SecureStore from "expo-secure-store";
+
 // Base URL for API
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5003/api";
+const API_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:5003/api";
 
 // Types
 export interface User {

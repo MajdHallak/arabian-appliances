@@ -46,8 +46,14 @@ const MaintenanceScreen = () => {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  // demo dropdown data
-  const data = ["pending", "scheduled", "in-progress", "completed", "cancel"];
+  // Status options matching the MaintenanceRequest interface
+  const data = [
+    "pending",
+    "scheduled",
+    "in-progress",
+    "completed",
+    "cancelled",
+  ];
 
   // Form state
   const [formData, setFormData] = useState({
@@ -202,6 +208,24 @@ const MaintenanceScreen = () => {
         return "#e74c3c";
       default:
         return "#7f8c8d";
+    }
+  };
+
+  // Add the updateMaintenanceRequestStatus function
+  const updateMaintenanceRequestStatus = async (
+    requestId: string,
+    status: string
+  ) => {
+    try {
+      const response = await apiRequest(
+        `/maintenance/${requestId}/status`,
+        "PUT",
+        { status }
+      );
+      return response;
+    } catch (error) {
+      console.error("Error updating maintenance request status:", error);
+      throw error;
     }
   };
 
@@ -520,7 +544,24 @@ const MaintenanceScreen = () => {
                       </View>
                     )}
                     <SelectList
-                      setSelected={(val) => setSelected(val)}
+                      setSelected={(val) => {
+                        setSelected(val);
+                        // Update the status when a new value is selected
+                        updateMaintenanceRequestStatus(item._id, val)
+                          .then(() => {
+                            // Refresh the requests list after successful update
+                            if (user?._id) {
+                              fetchUserRequests(user._id);
+                            }
+                          })
+                          .catch((error) => {
+                            Alert.alert(
+                              "Update Failed",
+                              "Failed to update the status. Please try again.",
+                              [{ text: "OK" }]
+                            );
+                          });
+                      }}
                       data={data}
                       placeholder="Status"
                       save="value"

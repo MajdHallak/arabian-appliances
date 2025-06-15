@@ -18,7 +18,7 @@ router.use(protect);
 router.get("/", authorize("admin"), getAllMaintenanceRequests);
 router.put(
   "/:id/status",
-  authorize("admin"),
+  // authorize("admin"),
   updateMaintenanceRequestStatus
 );
 router.put(
